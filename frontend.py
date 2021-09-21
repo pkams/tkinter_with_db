@@ -2,6 +2,34 @@
 from tkinter import *
 import backend
 
+# 5. Functions from backend
+def view_all():
+    rows = backend.view()
+    listbox.delete(0, END) # refresh list
+    for i, item in enumerate(rows):
+        listbox.insert(i, item[1])
+
+def search(title, author, year, isbm):
+    rows = backend.search(title, author, year, isbm)
+    listbox.delete(0, END)
+    for i, item in enumerate(rows):
+        listbox.insert(i, item[1])
+
+def insert(title, author, year, isbm):
+    backend.insert(title, author, year, isbm)
+
+def return_id():
+    for i in listbox.curselection():
+        return i+1
+
+def update(id, title, author, year, isbm):
+    backend.update(id, title, author, year, isbm)
+    rows = backend.view()
+    listbox.delete(0, END)  # refresh list
+    for i, item in enumerate(rows):
+        listbox.insert(i, item[1])
+
+
 # Creating Window Object
 window = Tk()
 
@@ -44,22 +72,22 @@ listbox.configure(yscrollcommand=scroll.set)
 scroll.configure(command=listbox.yview)
 
 # 4. Define buttons
-b1 = Button(window, text='View All', width=12, command = lambda: backend.view())
+b1 = Button(window, text='View All', width=12, command = lambda: view_all())
 b1.grid(row=2, column=3)
 
-b2 = Button(window, text='Search Entry', width=12, command=lambda: backend.search(title=title_text.get(),
+b2 = Button(window, text='Search Entry', width=12, command=lambda: search(title=title_text.get(),
                                                                                   author=author_text.get(),
                                                                                   year=year_text.get(),
                                                                                   isbm=isbm_text.get()))
 b2.grid(row=3, column=3)
 
-b3 = Button(window, text='Add Entry', width=12, command=lambda: backend.insert(title=title_text.get(),
+b3 = Button(window, text='Add Entry', width=12, command=lambda: insert(title=title_text.get(),
                                                                                   author=author_text.get(),
                                                                                   year=year_text.get(),
                                                                                   isbm=isbm_text.get()))
 b3.grid(row=4, column=3)
 
-b4 = Button(window, text='Update selected', width=12, command=lambda: backend.update(id = 0,title=title_text.get(),
+b4 = Button(window, text='Update selected', width=12, command=lambda: update(id = return_id(), title=title_text.get(),
                                                                                   author=author_text.get(),
                                                                                   year=year_text.get(),
                                                                                   isbm=isbm_text.get()))
@@ -68,7 +96,6 @@ b5 = Button(window, text='Deleted selected', width=12, command=lambda: backend.d
 b5.grid(row=6, column=3)
 b6 = Button(window, text='Close', width=12)
 b6.grid(row=6, column=3)
-
 
 # Main loop where all window objects will be declared
 window.mainloop()
