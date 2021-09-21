@@ -24,11 +24,13 @@ def return_id():
 
 def update(id, title, author, year, isbm):
     backend.update(id, title, author, year, isbm)
-    rows = backend.view()
-    listbox.delete(0, END)  # refresh list
-    for i, item in enumerate(rows):
-        listbox.insert(i, item[1])
 
+def delete(id):
+    print(id)
+    backend.delete(id)
+
+def quit():
+    window.destroy()
 
 # Creating Window Object
 window = Tk()
@@ -92,10 +94,10 @@ b4 = Button(window, text='Update selected', width=12, command=lambda: update(id 
                                                                                   year=year_text.get(),
                                                                                   isbm=isbm_text.get()))
 b4.grid(row=5, column=3)
-b5 = Button(window, text='Deleted selected', width=12, command=lambda: backend.delete(id=0))
+b5 = Button(window, text='Deleted selected', width=12, command=lambda: delete(id=return_id()))
 b5.grid(row=6, column=3)
-b6 = Button(window, text='Close', width=12)
-b6.grid(row=6, column=3)
+b6 = Button(window, text='Close', width=12, command= lambda: quit())
+b6.grid(row=7, column=3)
 
 # Main loop where all window objects will be declared
 window.mainloop()

@@ -40,15 +40,15 @@ def search(title="", author="", year="", isbm=""):
 def delete(id):
     conn = sqlite3.connect('books.db')
     cur = conn.cursor()
-    cur.execute("DELETE from book where id=?", (id))
+    cur.execute("DELETE from book where id=?", (id,))
     rows = cur.fetchall()
+    conn.commit()
     conn.close()
-    return rows
 
 def update(id, title, author, year, isbm):
     conn = sqlite3.connect('books.db')
     cur = conn.cursor()
     cur.execute("UPDATE book SET title=?, author=?, year=?, isbm=? WHERE id=?",
                 (title, author, isbm, year, id))
-    rows = cur.fetchall()
+    conn.commit()
     conn.close()
