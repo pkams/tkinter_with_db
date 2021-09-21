@@ -28,5 +28,31 @@ isbm_text = StringVar()
 e4 = Entry(window, textvariable=isbm_text)
 e4.grid(row=1, column=3)
 
+# 3. Define Listbox
+listbox = Listbox(window, height=6, width=35)
+listbox.grid(row=2, column=0, rowspan = 6, columnspan=2)
+
+# 3.1 Attaching scrollbar
+scroll = Scrollbar(window)
+scroll.grid(row=2, column=2, rowspan=6)
+
+listbox.configure(yscrollcommand=scroll.set)
+scroll.configure(command=listbox.yview)
+
+# 4. Define buttons
+b1 = Button(window, text='View All', width=12)
+b1.grid(row=2, column=3)
+b2 = Button(window, text='Search Entry', width=12)
+b2.grid(row=3, column=3)
+b3 = Button(window, text='Add Entry', width=12)
+b3.grid(row=4, column=3)
+b4 = Button(window, text='Update selected', width=12)
+b4.grid(row=5, column=3)
+b5 = Button(window, text='Deleted selected', width=12)
+b5.grid(row=6, column=3)
+b6 = Button(window, text='Close', width=12)
+b6.grid(row=6, column=3)
+
+
 # Main loop where all window objects will be declared
 window.mainloop()
