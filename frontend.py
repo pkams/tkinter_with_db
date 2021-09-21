@@ -3,31 +3,39 @@ from tkinter import *
 import backend
 
 # 5. Functions from backend
-def view_all():
-    rows = backend.view()
-    listbox.delete(0, END) # refresh list
-    for i, item in enumerate(rows):
-        listbox.insert(i, item[1])
 
-def search(title, author, year, isbm):
-    rows = backend.search(title, author, year, isbm)
+def refresh_listbox(rows):
     listbox.delete(0, END)
     for i, item in enumerate(rows):
         listbox.insert(i, item[1])
 
+def view_all():
+    rows = backend.view()
+    refresh_listbox(rows)
+
+def search(title, author, year, isbm):
+    rows = backend.search(title, author, year, isbm)
+    refresh_listbox(rows)
+
 def insert(title, author, year, isbm):
     backend.insert(title, author, year, isbm)
+    view_all()
 
 def return_id():
     for i in listbox.curselection():
         return i+1
 
 def update(id, title, author, year, isbm):
+    rows = backend.view()
+    id = rows[id-1][0]
     backend.update(id, title, author, year, isbm)
+    view_all()
 
 def delete(id):
-    print(id)
+    rows = backend.view()
+    id = rows[id-1][0]
     backend.delete(id)
+    view_all()
 
 def quit():
     window.destroy()
