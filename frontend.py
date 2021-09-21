@@ -1,8 +1,12 @@
 # Importing Lib
 from tkinter import *
+import backend
 
 # Creating Window Object
 window = Tk()
+
+# Starting backend
+backend.connect()
 
 # 1.Define labels
 l1 = Label(window, text="Title")
@@ -29,7 +33,7 @@ e4 = Entry(window, textvariable=isbm_text)
 e4.grid(row=1, column=3)
 
 # 3. Define Listbox
-listbox = Listbox(window, height=6, width=35)
+listbox = Listbox(window, height=6, width=35,)
 listbox.grid(row=2, column=0, rowspan = 6, columnspan=2)
 
 # 3.1 Attaching scrollbar
@@ -40,15 +44,27 @@ listbox.configure(yscrollcommand=scroll.set)
 scroll.configure(command=listbox.yview)
 
 # 4. Define buttons
-b1 = Button(window, text='View All', width=12)
+b1 = Button(window, text='View All', width=12, command = lambda: backend.view())
 b1.grid(row=2, column=3)
-b2 = Button(window, text='Search Entry', width=12)
+
+b2 = Button(window, text='Search Entry', width=12, command=lambda: backend.search(title=title_text.get(),
+                                                                                  author=author_text.get(),
+                                                                                  year=year_text.get(),
+                                                                                  isbm=isbm_text.get()))
 b2.grid(row=3, column=3)
-b3 = Button(window, text='Add Entry', width=12)
+
+b3 = Button(window, text='Add Entry', width=12, command=lambda: backend.insert(title=title_text.get(),
+                                                                                  author=author_text.get(),
+                                                                                  year=year_text.get(),
+                                                                                  isbm=isbm_text.get()))
 b3.grid(row=4, column=3)
-b4 = Button(window, text='Update selected', width=12)
+
+b4 = Button(window, text='Update selected', width=12, command=lambda: backend.update(id = 0,title=title_text.get(),
+                                                                                  author=author_text.get(),
+                                                                                  year=year_text.get(),
+                                                                                  isbm=isbm_text.get()))
 b4.grid(row=5, column=3)
-b5 = Button(window, text='Deleted selected', width=12)
+b5 = Button(window, text='Deleted selected', width=12, command=lambda: backend.delete(id=0))
 b5.grid(row=6, column=3)
 b6 = Button(window, text='Close', width=12)
 b6.grid(row=6, column=3)
